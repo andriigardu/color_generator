@@ -23,28 +23,35 @@ body {
 .container {
     display: flex;
     gap: 20px;
+    align-items: center; /* Vertically center sliders and square */
 }
 .inputs {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Add more space between sliders */
 }
 .input-group {
-    margin-bottom: 20px;
-    text-align: center;
     position: relative;
-}
-.input-title {
-    font-size: 14px;
-    color: var(--notion-gray-text-color, #6b7280);
-    margin-bottom: 4px;
+    text-align: center;
 }
 .slider-value {
     position: absolute;
-    top: -20px;
+    top: -40px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 14px;
     color: var(--notion-accent-color, #9966ff);
     font-weight: 600;
+}
+.mood-label {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: var(--notion-gray-text-color, #6b7280);
+    font-weight: 500;
 }
 input[type="range"] {
     width: 100%;
@@ -107,9 +114,6 @@ button:active {
     body {
         color: var(--notion-text-color, #ffffff);
     }
-    .input-title {
-        color: var(--notion-gray-text-color, #999999);
-    }
     input[type="range"] {
         background: #4c4c4c;
     }
@@ -124,17 +128,17 @@ button:active {
     <div class="inputs">
         <div class="input-group">
             <div class="slider-value" id="hueValue">180°</div>
-            <div class="input-title">Mood Spectrum</div>
+            <div class="mood-label" id="hueMood">Calm</div>
             <input type="range" id="hue" min="0" max="360" value="180">
         </div>
         <div class="input-group">
             <div class="slider-value" id="saturationValue">50%</div>
-            <div class="input-title">Vibrancy Vibe</div>
+            <div class="mood-label" id="saturationMood">Balanced</div>
             <input type="range" id="saturation" min="0" max="100" value="50">
         </div>
         <div class="input-group">
             <div class="slider-value" id="brightnessValue">50%</div>
-            <div class="input-title">Mood Illumination</div>
+            <div class="mood-label" id="brightnessMood">Mellow</div>
             <input type="range" id="brightness" min="0" max="100" value="50">
         </div>
     </div>
@@ -156,8 +160,14 @@ function hsbToRgb(h, s, b) {
     return { r, g, b: b2 };
 }
 
-function rgbToHex({ r, g, b }) {
-    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
+function updateMoodLabels(hue, saturation, brightness) {
+    const hueMood = hue < 60 ? "Energetic" : hue < 180 ? "Calm" : hue < 300 ? "Vivid" : "Warm";
+    const saturationMood = saturation < 20 ? "Muted" : saturation < 60 ? "Balanced" : "Vibrant";
+    const brightnessMood = brightness < 20 ? "Dark" : brightness < 60 ? "Mellow" : "Bright";
+
+    document.getElementById("hueMood").textContent = hueMood;
+    document.getElementById("saturationMood").textContent = saturationMood;
+    document.getElementById("brightnessMood").textContent = brightnessMood;
 }
 
 function updateColor() {
@@ -166,14 +176,15 @@ function updateColor() {
     const brightness = parseFloat(document.getElementById('brightness').value);
 
     const rgb = hsbToRgb(hue, saturation, brightness);
-    const hexColor = rgbToHex(rgb);
 
     document.getElementById('colorPreview').style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
 
-    // Update slider labels
+    // Update slider values and mood labels
     document.getElementById('hueValue').textContent = `${hue}°`;
     document.getElementById('saturationValue').textContent = `${saturation}%`;
     document.getElementById('brightnessValue').textContent = `${brightness}%`;
+
+    updateMoodLabels(hue, saturation, brightness);
 }
 
 function generateRandomColor() {
