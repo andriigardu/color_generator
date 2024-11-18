@@ -14,22 +14,30 @@
 }
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    max-width: 600px;
+    max-width: 100%; /* Change from 600px to 100% */
     margin: 0 auto;
     padding: 20px;
     background-color: transparent !important;
     color: var(--notion-text-color, #37352f);
+    display: flex; /* Add this */
+    justify-content: center; /* Add this */
+    align-items: center; /* Add this */
+    min-height: 100vh; /* Add this */
 }
+
 .container {
     display: flex;
+    flex-direction: column; /* Change from row to column */
     gap: 20px;
     align-items: center;
+    max-width: 600px; /* Add this */
+    width: 100%; /* Add this */
 }
 .inputs {
-    flex: 1;
+    width: 100%; /* Change from flex: 1 to width: 100% */
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Reduced gap between slider groups */
+    gap: 15px;
 }
 .input-group {
     position: relative;
@@ -74,7 +82,7 @@ input[type="range"]::-webkit-slider-thumb {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 .color-preview-container {
-    flex: 1;
+    width: 100%; /* Change from flex: 1 to width: 100% */
     display: flex;
     flex-direction: column;
     align-items: center;
