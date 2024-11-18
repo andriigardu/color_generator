@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,38 +24,35 @@ body {
 .container {
     display: flex;
     gap: 20px;
-    align-items: center; /* Vertically center sliders and square */
+    align-items: center;
 }
 .inputs {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 30px; /* Add more space between sliders */
+    gap: 30px;
 }
 .input-group {
     position: relative;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: left;
+    margin-bottom: 20px;
 }
-
-.slider-value {
-    position: static;
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 5px;
+}
+.slider-value {
     font-size: 14px;
     color: var(--notion-accent-color, #9966ff);
     font-weight: 600;
 }
-
 .mood-label {
-    position: static;
-    margin-bottom: 5px;
     font-size: 12px;
     color: var(--notion-gray-text-color, #6b7280);
     font-weight: 500;
 }
-
 input[type="range"] {
     width: 100%;
     -webkit-appearance: none;
@@ -64,7 +62,6 @@ input[type="range"] {
     border-radius: 5px;
     outline: none;
     transition: background 0.3s;
-    margin-top: 5px;
 }
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -85,8 +82,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .color-preview {
     width: 100%;
-    max-width: 175px;
-    height: 175px;
+    max-width: 150px;
+    height: 150px;
     margin-bottom: 10px;
     border: 2px solid #e5e5e5;
     border-radius: 5px;
@@ -94,7 +91,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 button {
     width: 100%;
-    max-width: 125px;
+    max-width: 150px;
     padding: 8px;
     font-size: 14px;
     border-radius: 3px;
@@ -130,18 +127,24 @@ button:active {
 <div class="container">
     <div class="inputs">
         <div class="input-group">
-            <div class="slider-value" id="hueValue">180°</div>
-            <div class="mood-label" id="hueMood">Calm</div>
+            <div class="slider-header">
+                <span class="slider-value" id="hueValue">180°</span>
+                <span class="mood-label" id="hueMood">Calm</span>
+            </div>
             <input type="range" id="hue" min="0" max="360" value="180">
         </div>
         <div class="input-group">
-            <div class="slider-value" id="saturationValue">50%</div>
-            <div class="mood-label" id="saturationMood">Balanced</div>
+            <div class="slider-header">
+                <span class="slider-value" id="saturationValue">50%</span>
+                <span class="mood-label" id="saturationMood">Balanced</span>
+            </div>
             <input type="range" id="saturation" min="0" max="100" value="50">
         </div>
         <div class="input-group">
-            <div class="slider-value" id="brightnessValue">50%</div>
-            <div class="mood-label" id="brightnessMood">Mellow</div>
+            <div class="slider-header">
+                <span class="slider-value" id="brightnessValue">50%</span>
+                <span class="mood-label" id="brightnessMood">Mellow</span>
+            </div>
             <input type="range" id="brightness" min="0" max="100" value="50">
         </div>
     </div>
