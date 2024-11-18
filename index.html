@@ -1,218 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Color Generator</title>
-<style>
-:root {
-    --notion-text-color: #37352f;
-    --notion-gray-text-color: #6b7280;
-    --notion-input-background: #f7f6f3;
-    --notion-border-color: #e5e5e5;
-    --notion-accent-color: #9966ff;
-}
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: transparent !important;
-    color: var(--notion-text-color, #37352f);
-}
-.container {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-.inputs {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Reduced gap between slider groups */
-}
-.input-group {
-    position: relative;
-    text-align: left;
-    margin-bottom: 10px; /* Reduced margin */
-}
-.slider-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2px; /* Reduced margin */
-}
-.slider-value {
-    font-size: 14px;
-    color: var(--notion-accent-color, #9966ff);
-    font-weight: 600;
-}
-.mood-label {
-    font-size: 12px;
-    color: var(--notion-gray-text-color, #6b7280);
-    font-weight: 500;
-}
-input[type="range"] {
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 5px;
-    background: #e5e5e5;
-    border-radius: 5px;
-    outline: none;
-    transition: background 0.3s;
-    margin-top: 3px; /* Reduced margin */
-}
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    background: var(--notion-accent-color, #9966ff);
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-}
-.color-preview-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-.color-preview {
-    width: 100%;
-    max-width: 150px;
-    height: 150px;
-    margin-bottom: 10px;
-    border: 2px solid #e5e5e5;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-button {
-    width: 100%;
-    max-width: 150px;
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 3px;
-    background-color: var(--notion-accent-color, #9966ff);
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 3px 6px rgba(153, 102, 255, 0.3);
-}
-button:hover {
-    background-color: #7f4ad9;
-    box-shadow: 0 5px 10px rgba(153, 102, 255, 0.5);
-}
-button:active {
-    transform: scale(0.98);
-}
-@media (prefers-color-scheme: dark) {
-    body {
-        color: var(--notion-text-color, #ffffff);
-    }
-    input[type="range"] {
-        background: #4c4c4c;
-    }
-    .color-preview {
-        border-color: var(--notion-border-color, #4c4c4c);
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Generator</title>
+    <style>
+        :root {
+            --notion-text-color: #37352f;
+            --notion-gray-text-color: #6b7280;
+            --notion-input-background: #f7f6f3;
+            --notion-border-color: #e5e5e5;
+            --notion-accent-color: #9966ff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: transparent !important;
+            color: var(--notion-text-color, #37352f);
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .inputs {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .input-group {
+            position: relative;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+        .slider-value {
+            font-size: 14px;
+            color: var(--notion-accent-color, #9966ff);
+            font-weight: 600;
+        }
+        .mood-label {
+            font-size: 12px;
+            color: var(--notion-gray-text-color, #6b7280);
+            font-weight: 500;
+        }
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            background: #e5e5e5;
+            border-radius: 5px;
+            outline: none;
+            transition: background 0.3s;
+            margin-top: 3px;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--notion-accent-color, #9966ff);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+        .color-preview-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .color-preview {
+            width: 100%;
+            max-width: 150px;
+            height: 150px;
+            margin-bottom: 10px;
+            border: 2px solid #e5e5e5;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button {
+            width: 100%;
+            max-width: 150px;
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 3px;
+            background-color: var(--notion-accent-color, #9966ff);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 3px 6px rgba(153, 102, 255, 0.3);
+        }
+        button:hover {
+            background-color: #7f4ad9;
+            box-shadow: 0 5px 10px rgba(153, 102, 255, 0.5);
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: var(--notion-text-color, #ffffff);
+            }
+            input[type="range"] {
+                background: #4c4c4c;
+            }
+            .color-preview {
+                border-color: var(--notion-border-color, #4c4c4c);
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="inputs">
-        <div class="input-group">
-            <div class="slider-header">
-                <span class="slider-value" id="hueValue">180°</span>
-                <span class="mood-label" id="hueMood">Calm</span>
+    <div class="container">
+        <div class="inputs">
+            <div class="input-group">
+                <div class="slider-header">
+                    <span class="slider-value" id="hueValue">180°</span>
+                    <span class="mood-label" id="hueMood">Calm</span>
+                </div>
+                <input type="range" id="hue" min="0" max="360" value="180">
             </div>
-            <input type="range" id="hue" min="0" max="360" value="180">
+            <div class="input-group">
+                <div class="slider-header">
+                    <span class="slider-value" id="saturationValue">50%</span>
+                    <span class="mood-label" id="saturationMood">Balanced</span>
+                </div>
+                <input type="range" id="saturation" min="0" max="100" value="50">
+            </div>
+            <div class="input-group">
+                <div class="slider-header">
+                    <span class="slider-value" id="brightnessValue">50%</span>
+                    <span class="mood-label" id="brightnessMood">Mellow</span>
+                </div>
+                <input type="range" id="brightness" min="0" max="100" value="50">
+            </div>
         </div>
-        <div class="input-group">
-            <div class="slider-header">
-                <span class="slider-value" id="saturationValue">50%</span>
-                <span class="mood-label" id="saturationMood">Balanced</span>
-            </div>
-            <input type="range" id="saturation" min="0" max="100" value="50">
-        </div>
-        <div class="input-group">
-            <div class="slider-header">
-                <span class="slider-value" id="brightnessValue">50%</span>
-                <span class="mood-label" id="brightnessMood">Mellow</span>
-            </div>
-            <input type="range" id="brightness" min="0" max="100" value="50">
+        <div class="color-preview-container">
+            <div class="color-preview" id="colorPreview"></div>
+            <button id="randomButton">Generate Random</button>
         </div>
     </div>
-    <div class="color-preview-container">
-        <div class="color-preview" id="colorPreview"></div>
-        <button id="randomButton">Generate Random</button>
-    </div>
-</div>
 
-<script>
-function hsbToRgb(h, s, b) {
-    s /= 100;
-    b /= 100;
-    const k = (n) => (n + h / 60) % 6;
-    const f = (n) => b * (1 - s * Math.max(0, Math.min(k(n), 4 - k(n), 1)));
-    const r = Math.round(255 * f(5));
-    const g = Math.round(255 * f(3));
-    const b2 = Math.round(255 * f(1));
-    return { r, g, b: b2 };
-}
+    <script>
+        function hsbToRgb(h, s, b) {
+            s /= 100;
+            b /= 100;
+            const k = (n) => (n + h / 60) % 6;
+            const f = (n) => b * (1 - s * Math.max(0, Math.min(k(n), 4 - k(n), 1)));
+            const r = Math.round(255 * f(5));
+            const g = Math.round(255 * f(3));
+            const b2 = Math.round(255 * f(1));
+            return { r, g, b: b2 };
+        }
 
-function updateMoodLabels(hue, saturation, brightness) {
-    const hueMood = hue < 60 ? "Energetic" : hue < 180 ? "Calm" : hue < 300 ? "Vivid" : "Warm";
-    const saturationMood = saturation < 20 ? "Muted" : saturation < 60 ? "Balanced" : "Vibrant";
-    const brightnessMood = brightness < 20 ? "Dark" : brightness < 60 ? "Mellow" : "Bright";
+        function rgbToHex(r, g, b) {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
 
-    document.getElementById("hueMood").textContent = hueMood;
-    document.getElementById("saturationMood").textContent = saturationMood;
-    document.getElementById("brightnessMood").textContent = brightnessMood;
-}
+        function updateMoodLabels(hue, saturation, brightness) {
+            const hueMood = hue < 60 ? "Energetic" : hue < 180 ? "Calm" : hue < 300 ? "Vivid" : "Warm";
+            const saturationMood = saturation < 20 ? "Muted" : saturation < 60 ? "Balanced" : "Vibrant";
+            const brightnessMood = brightness < 20 ? "Dark" : brightness < 60 ? "Mellow" : "Bright";
 
-function updateColor() {
-    const hue = parseFloat(document.getElementById('hue').value);
-    const saturation = parseFloat(document.getElementById('saturation').value);
-    const brightness = parseFloat(document.getElementById('brightness').value);
+            document.getElementById("hueMood").textContent = hueMood;
+            document.getElementById("saturationMood").textContent = saturationMood;
+            document.getElementById("brightnessMood").textContent = brightnessMood;
+        }
 
-    const rgb = hsbToRgb(hue, saturation, brightness);
+        function updateColor() {
+            const hue = parseFloat(document.getElementById('hue').value);
+            const saturation = parseFloat(document.getElementById('saturation').value);
+            const brightness = parseFloat(document.getElementById('brightness').value);
 
-    document.getElementById('colorPreview').style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+            const rgb = hsbToRgb(hue, saturation, brightness);
+            const hexColor = rgbToHex(rgb.r, rgb.g, rgb.b);
 
-    // Update slider values and mood labels
-    document.getElementById('hueValue').textContent = `${hue}°`;
-    document.getElementById('saturationValue').textContent = `${saturation}%`;
-    document.getElementById('brightnessValue').textContent = `${brightness}%`;
+            const colorPreview = document.getElementById('colorPreview');
+            colorPreview.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+            colorPreview.textContent = hexColor;
+            colorPreview.style.color = brightness > 50 ? '#000' : '#fff';
 
-    updateMoodLabels(hue, saturation, brightness);
-}
+            // Update slider values and mood labels
+            document.getElementById('hueValue').textContent = `${hue}°`;
+            document.getElementById('saturationValue').textContent = `${saturation}%`;
+            document.getElementById('brightnessValue').textContent = `${brightness}%`;
 
-function generateRandomColor() {
-    const randomHue = Math.floor(Math.random() * 361);
-    const randomSaturation = Math.floor(Math.random() * 101);
-    const randomBrightness = Math.floor(Math.random() * 101);
+            updateMoodLabels(hue, saturation, brightness);
+        }
 
-    document.getElementById('hue').value = randomHue;
-    document.getElementById('saturation').value = randomSaturation;
-    document.getElementById('brightness').value = randomBrightness;
+        function generateRandomColor() {
+            const randomHue = Math.floor(Math.random() * 361);
+            const randomSaturation = Math.floor(Math.random() * 101);
+            const randomBrightness = Math.floor(Math.random() * 101);
 
-    updateColor();
-}
+            document.getElementById('hue').value = randomHue;
+            document.getElementById('saturation').value = randomSaturation;
+            document.getElementById('brightness').value = randomBrightness;
 
-// Attach event listeners for sliders and button
-['hue', 'saturation', 'brightness'].forEach(id => {
-    document.getElementById(id).addEventListener('input', updateColor);
-});
-document.getElementById('randomButton').addEventListener('click', generateRandomColor);
+            updateColor();
+        }
 
-// Initialize with default color
-updateColor();
-</script>
+        // Attach event listeners for sliders and button
+        ['hue', 'saturation', 'brightness'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateColor);
+        });
+        document.getElementById('randomButton').addEventListener('click', generateRandomColor);
+
+        // Initialize with default color
+        updateColor();
+    </script>
 </body>
 </html>
