@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Generator</title>
+<style>
+:root {
+    --notion-text-color: #37352f;
+    --notion-gray-text-color: #6b7280;
+    --notion-input-background: #f7f6f3;
+    --notion-code-background: #f7f6f3;
+    --notion-border-color: #e5e5e5;
+    --notion-accent-color: #9966ff;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: transparent !important;
+    color: var(--notion-text-color, #37352f);
+}
+h1 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--notion-text-color, #37352f)!important;
+}
+.input-group {
+    margin-bottom: 16px;
+}
+label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: var(--notion-gray-text-color, #6b7280);
+}
+input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid var(--notion-border-color, #e5e5e5);
+    border-radius: 3px;
+    color: var(--notion-text-color, #37352f);
+    background-color: var(--notion-input-background, #f7f6f3);
+    box-sizing: border-box;
+}
+input:focus {
+    outline: none;
+    border-color: var(--notion-accent-color, #9966ff);
+    box-shadow: 0 0 0 1px #2eaadc;
+}
+.color-preview {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+    border: 2px solid #e5e5e5;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+button {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 3px;
+    margin: 20px 0;
+    background-color: var(--notion-accent-color, #9966ff);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 3px 6px rgba(153, 102, 255, 0.3);
+}
+button:hover {
+    background-color: #7f4ad9;
+    box-shadow: 0 5px 10px rgba(153, 102, 255, 0.5);
+}
+button:active {
+    transform: scale(0.98);
+}
+#result {
+    font-weight: 500;
+    text-align: center;
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid var(--notion-border-color, #e5e5e5);
+    border-radius: 3px;
+    background-color: var(--notion-code-background, #f7f6f3);
+    color: var(--notion-text-color, #37352f);
+    box-sizing: border-box;
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        color: var(--notion-text-color, #ffffff);
+    }
+    h1 {
+        color: #ffffff;
+    }
+    label {
+        color: var(--notion-gray-text-color, #999999);
+    }
+    input {
+        color: var(--notion-text-color, #ffffff);
+        background-color: var(--notion-input-background, #2f3437);
+        border-color: var(--notion-border-color, #4c4c4c);
+    }
+    .color-preview {
+        border-color: var(--notion-border-color, #4c4c4c);
+    }
+    #result {
+        background-color: var(--notion-code-background, #2f3437);
+        color: var(--notion-text-color, #ffffff);
+    }
+}
+</style>
+</head>
+<body>
+<h1>Color Generator</h1>
+<div class="input-group">
+    <label for="hue">Hue (0-360)</label>
+    <input type="number" id="hue" value="180" min="0" max="360">
+</div>
+<div class="input-group">
+    <label for="saturation">Saturation (0-100%)</label>
+    <input type="number" id="saturation" value="50" min="0" max="100">
+</div>
+<div class="input-group">
+    <label for="brightness">Brightness (0-100%)</label>
+    <input type="number" id="brightness" value="50" min="0" max="100">
+</div>
+<div class="color-preview" id="colorPreview"></div>
+<button onclick="generateColor()">Generate Color</button>
+<div id="result"></div>
+
+<script>
+function hsbToRgb(h, s, b) {
+    s /= 100;
+    b /= 100;
+    const k = (n) => (n + h / 60) % 6;
+    const f = (n) => b * (1 - s * Math.max(0, Math.min(k(n), 4 - k(n), 1)));
+    const r = Math.round(255 * f(5));
+    const g = Math.round(255 * f(3));
+    const b2 = Math.round(255 * f(1));
+    return `rgb(${r}, ${g}, ${b2})`;
+}
+
+function generateColor() {
+    const hue = parseFloat(document.getElementById('hue').value);
+    const saturation = parseFloat(document.getElementById('saturation').value);
+    const brightness = parseFloat(document.getElementById('brightness').value);
+
+    const color = hsbToRgb(hue, saturation, brightness);
+    const hexColor = rgbToHex(color);
+
+    document.getElementById('colorPreview').style.backgroundColor = color;
+    document.getElementById('result').innerHTML = `
+        <div><strong>RGB:</strong> ${color}</div>
+        <div><strong>HEX:</strong> ${hexColor}</div>
+    `;
+}
+
+function rgbToHex(rgb) {
+    const [r, g, b] = rgb.match(/\d+/g).map(Number);
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
+}
+
+// Initial color generation
+generateColor();
+</script>
+</body>
+</html>
